@@ -48,4 +48,12 @@ class DataLoader {
     val StartVertexRegex(startVertex) = startVertexLine(0)
     startVertex
   }
+
+  def getEndVertex(lines: Seq[String]) = {
+    val endVertexLine = lines filter isEndVertexDelcaration
+    val EndVertexRegex = endVertexRegex.r
+    // TODO: reconsider the explicit (0)
+    val EndVertexRegex(endVertex) = endVertexLine(0)
+    endVertex
+  }
 }

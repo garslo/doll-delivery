@@ -104,6 +104,15 @@ object DataLoaderSpec extends mutable.Specification {
 
       result must_==("the start location")
     }
+
+    "extracts the proper end vertex" in {
+      val lines = Seq(
+        """startingLocation: "the start location"""",
+        """targetLocation: "the target location""""
+      )
+      val result = dataLoader.getEndVertex(lines)
+
+      result must_==("the target location")
     }
   }
 }
