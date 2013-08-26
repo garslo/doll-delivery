@@ -40,4 +40,12 @@ class DataLoader {
     declarations.length >= 2
   }
 
+  // TODO: Refactor these two. They're much too similar
+  def getStartVertex(lines: Seq[String]) = {
+    val startVertexLine = lines filter isStartVertexDelcaration
+    val StartVertexRegex = startVertexRegex.r
+    // TODO: reconsider the explicit (0)
+    val StartVertexRegex(startVertex) = startVertexLine(0)
+    startVertex
+  }
 }
