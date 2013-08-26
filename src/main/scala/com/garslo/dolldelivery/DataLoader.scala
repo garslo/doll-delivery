@@ -33,4 +33,11 @@ class DataLoader {
   }
 
   def getEdges(lines: Seq[String]) = lines filter isEdge map extractEdge
+
+  def hasStartEndDeclarations(lines: Seq[String]) = {
+    val declarations = lines filter ((line) =>
+      isStartVertexDelcaration(line) || isEndVertexDelcaration(line))
+    declarations.length >= 2
+  }
+
 }

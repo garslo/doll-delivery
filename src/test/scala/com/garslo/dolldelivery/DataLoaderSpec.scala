@@ -77,6 +77,23 @@ object DataLoaderSpec extends mutable.Specification {
     }
 
     "extracts the proper intial vertex" in {
+    "detects start and end declaration existence" in {
+      val goodLines = Seq(
+        """startingLocation: "somewhere"""",
+        """targetLocation: "else""""
+      )
+      val result = dataLoader.hasStartEndDeclarations(goodLines)
+
+      result must beTrue
+
+      val badLines = Seq(
+        """startingLocation: "is ok"""",
+        """noTargetLocation: "is not ok""""
+      )
+      val badResult = dataLoader.hasStartEndDeclarations(badLines)
+
+      badResult must beFalse
+    }
 
     }
   }
