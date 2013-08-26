@@ -88,9 +88,9 @@ object ExtractorSpec extends mutable.Specification {
       val line = """Map("startLocation" -> "initial", "endLocation" -> "final", "distance" -> 10)"""
       val edge = extractor.extractEdge(line)
 
-      edge.get("startLocation") must_==(Some("initial"))
-      edge.get("endLocation") must_==(Some("final"))
-      edge.get("distance") must_==(Some(10))
+      edge.get("startLocation") must be equalTo(Some("initial"))
+      edge.get("endLocation") must be equalTo(Some("final"))
+      edge.get("distance") must be equalTo(Some(10))
     }
 
     "extract the proper number of edges" in {
@@ -101,7 +101,7 @@ object ExtractorSpec extends mutable.Specification {
       )
       val result = extractor.getEdges(edges)
 
-      result.length must_==(2)
+      result.length must be equalTo(2)
     }
 
     "extract the proper start vertex" in {
@@ -111,7 +111,7 @@ object ExtractorSpec extends mutable.Specification {
       )
       val result = extractor.getStartVertex(lines)
 
-      result must_==("the start location")
+      result must be equalTo("the start location")
     }
 
     "extract the proper end vertex" in {
@@ -121,7 +121,7 @@ object ExtractorSpec extends mutable.Specification {
       )
       val result = extractor.getEndVertex(lines)
 
-      result must_==("the target location")
+      result must be equalTo("the target location")
     }
   }
 }
