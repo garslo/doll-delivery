@@ -35,9 +35,21 @@ class FileLoader(extractor: DataExtractor) extends DataLoader {
   def load(filename: String) = {
     val file = Source.fromFile(filename).mkString
     val lines = file.split("\\r*\\n") map { _.trim }
+
     val edges = extractor.getEdges(lines)
     val start = extractor.getStartVertex(lines)
     val end = extractor.getEndVertex(lines)
     (start, end, edges)
+  }
+}
+
+// Convenience object for loading map syntax files
+// TODO: Move to MapSyntax?
+object loadMapSyntaxFile {
+  def apply(filename: String) = {
+    val validator = new MapSyntaxValidator()
+    val extractor = new Extractor(validator)
+    val loader = new FileLoader(extractor)
+    loader.load(filename)
   }
 }
