@@ -1,7 +1,8 @@
 package com.garslo.dolldelivery
 
 trait DataLoader {
-  def load(filename: String): Seq[Map[String, Any]]
+  // Return type is (startVertex, endVertex, edges)
+  def load(filename: String): (String, String, Seq[Map[String, Any]])
 }
 
 trait DataExtractor {

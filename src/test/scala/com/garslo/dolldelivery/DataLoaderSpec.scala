@@ -3,26 +3,26 @@ package com.garslo.dolldelivery
 import scala.io.Source
 import org.specs2._
 
-object DataLoaderSpec extends mutable.Specification {
-//  "LoaderForMapSyntax" should {
-//    val dataLoader = new LoaderForMapSyntax()
-//    val dataFiles = Seq(
-//      "src/test/scala/com/garslo/dolldelivery/resources/test_data_1.txt"
-//    )
-//
-//    "fail on non-existent input file" in {
-//      val result = dataLoader.load("this-file-doesn't-exist")
-//      result must_==(None)
-//    }
-//
-//    "pass on existing file" in {
-//      val result = dataLoader.load(dataFiles(0))
-//      result match {
-//        case Some(edges) => success
-//        case None => failure
-//      }
-//    }
-//  }
+object FileLoaderSpec extends mutable.Specification {
+  "FileLoader" should {
+    val validator = new MapSyntaxValidator()
+    val extractor = new Extractor(validator)
+    val loader = new FileLoader(extractor)
+    val dataFiles = Seq(
+      "src/test/scala/com/garslo/dolldelivery/resources/test_data_1.txt"
+    )
+
+    "load all the edges from a file" in {
+      val (_, _, edges) = loader.load(dataFiles(0))
+      edges.length must be equalTo(23)
+    }
+
+    "load the correct start/end vertices" in {
+      val (start, end, _) = loader.load(dataFiles(0))
+      start must be equalTo("Kruthika's abode")
+      end must be equalTo("Craig's haunt")
+    }
+  }
 }
 
 object MapSyntaxSpec extends mutable.Specification {

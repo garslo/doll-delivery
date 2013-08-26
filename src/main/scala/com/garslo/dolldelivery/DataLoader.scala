@@ -31,16 +31,13 @@ class Extractor(syntax: DataValidator) extends DataExtractor {
   }
 }
 
-//class LoaderForMapSyntax extends DataLoader {
-//  def load(filename: String) = {
-    // TODO: Is there a better way to check existence?
-//    try {
-//      val file = Source.fromFile(filename).mkString
-//      val lines = file.split("\\r*\\n")
-//    } catch {
-//      case e: java.io.FileNotFoundException =>
-//        return None
-//    }
-//    Some("")
-//  }
-//}
+class FileLoader(extractor: DataExtractor) extends DataLoader {
+  def load(filename: String) = {
+    val file = Source.fromFile(filename).mkString
+    val lines = file.split("\\r*\\n") map { _.trim }
+    val edges = extractor.getEdges(lines)
+    val start = extractor.getStartVertex(lines)
+    val end = extractor.getEndVertex(lines)
+    (start, end, edges)
+  }
+}
