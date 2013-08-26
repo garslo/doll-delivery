@@ -11,12 +11,16 @@ class DataLoader {
   val endVertexRegex = """targetLocation:\s*"(.+)""""
 
   def load(filename: String): Option[String] = {
+    // TODO: Is there a better way to check existence?
     try {
       val file = Source.fromFile(filename)
     } catch {
       case e: java.io.FileNotFoundException =>
         return None
     }
+
+    val lines = file mkString split "\\r*\\n"
+
     Some("")
   }
 

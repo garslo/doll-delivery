@@ -76,7 +76,6 @@ object DataLoaderSpec extends mutable.Specification {
       badResult must beFalse
     }
 
-    "extracts the proper intial vertex" in {
     "detects start and end declaration existence" in {
       val goodLines = Seq(
         """startingLocation: "somewhere"""",
