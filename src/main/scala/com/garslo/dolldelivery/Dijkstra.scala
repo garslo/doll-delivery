@@ -1,11 +1,20 @@
 package com.garslo.dolldelivery
 
 class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorithm {
-  val distances = collection.mutable.Map.empty[String, Int]
   type MutableSet = collection.mutable.Set[String]
+  // For convenience; stores the neighbors for a given vertex
   val neighbors = collection.mutable.Map.empty[String, MutableSet]
+
+  /// Needed for Dijkstra's algorithm
+  // Stores the distances from the start vertex to a given vertex
+  val distances = collection.mutable.Map.empty[String, Int]
+
+  // Keeps track of visited/unvisited vertices
   val unvisitedVertices = collection.mutable.Set.empty[String]
   val visitedVertices = collection.mutable.Set.empty[String]
+
+  // Stores each vertex's "previous" vertex. Used to build the final
+  // path
   val previous = collection.mutable.Map.empty[String, String]
 
   // Set up the distances and neighbors
