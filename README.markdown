@@ -79,3 +79,9 @@ Map(distance -> 31, path -> Kruthika's abode => Brian's apartment => Wesley's co
 ..
 $
 ```
+
+## Limitations
+
+`doll-delivery` makes no accommodation for unconnected graphs. That
+is, there must be some path from each vertex to any other vertex in
+the graph.
