@@ -16,6 +16,9 @@ class Extractor(validator: DataValidator) extends DataExtractor(validator) {
   def getVertex(lines: Seq[String], vertexType: String) = {
     val vertexLine = lines filter {line => validator.isSpecialDeclaration(line, vertexType)}
     val VertexRegex = validator.syntax(vertexType).r
+    if (vertexLine.length == 0) {
+      throw new BadSyntaxException
+    }
     val VertexRegex(vertex) = vertexLine(0)
     vertex
   }
