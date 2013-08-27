@@ -17,31 +17,52 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
   // path
   val previous = collection.mutable.Map.empty[String, String]
 
-  // Set up the distances and neighbors
-  // TODO: Change to foreach
-  for (edge <- graph) {
-    val start = edge("startLocation").toString
-    val end = edge("endLocation").toString
-    distances(start) = Int.MaxValue
-    distances(end) = Int.MaxValue
-    // Clean this up?
-    unvisitedVertices += start
-    unvisitedVertices += end
+  def findShortestPath(start: String, end: String) = {
+    initialize()
+    distances(start) = 0
+    markAsVisited(start)
+    var current = start
+    do {
+      setTentativeDistances(current)
+      markAsVisited(current)
+      current = closestVertex(current)
+    } while (!visited(end))
 
-    previous(edge("startLocation").toString) = ""
+    (distances(end), start +: gatherShortestPathTo(end))
+  }
 
-    // TODO: Clean this up...duplication
-    if (neighbors contains start) {
-      neighbors(start) += end
-    } else {
-      neighbors(start) = collection.mutable.Set(end)
+  def initialize() = {
+    // Iterate over the edges and extract vertex and neighbor
+    // information. Also initialize the distances and
+    // unvisitedVertices structures.
+    graph foreach { edge =>
+      val start = edge("startLocation").toString
+      val end = edge("endLocation").toString
+
+      // Int.MaxValue is close enough to infinity :)
+      distances(start) = Int.MaxValue
+      distances(end) = Int.MaxValue
+
+      unvisitedVertices += start
+      unvisitedVertices += end
+
+      previous(start) = ""
+      addAsNeighbors(start, end)
     }
+  }
 
-    if (neighbors contains end) {
-      neighbors(end) += start
-    } else {
-      neighbors(end) = collection.mutable.Set(start)
-    }
+  def addAsNeighbors(start: String, end: String) = {
+      if (neighbors contains start) {
+        neighbors(start) += end
+      } else {
+        neighbors(start) = collection.mutable.Set(end)
+      }
+
+      if (neighbors contains end) {
+        neighbors(end) += start
+      } else {
+        neighbors(end) = collection.mutable.Set(start)
+      }
   }
 
   def setTentativeDistances(current: String) = {
@@ -60,25 +81,14 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
     visitedVertices += vertex
   }
 
-  def findShortestPath(start: String, end: String) = {
-    distances(start) = 0
-    markAsVisited(start)
-    var current = start
-    do {
-      setTentativeDistances(current)
-      markAsVisited(current)
-      // Find smallest tentative distance
-      current = closestVertex(current)
-    } while (!visited(end))
-    // Work backward & find the shortest path
+  def gatherShortestPathTo(endVertex: String) = {
     val shortestPath = collection.mutable.MutableList.empty[String]
-    current = end
+    var current = endVertex
+
     do {
       shortestPath += current
       current = previous(current)
     } while (previous(current) != "")
-
-    shortestPath += start
     shortestPath.reverse
   }
 
@@ -102,8 +112,9 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
       (m("startLocation") == start && m("endLocation") == end) || (m("endLocation") == start && m("startLocation") == end)
     })
     edge match {
-      // TODO: change variable name
-      case Some(thing) => thing("distance").toString().toInt
+      // Not ideal: the map value is truly an integer, but typed as
+      // Any to fit into the Map
+      case Some(theEdge) => theEdge("distance").toString().toInt
       case None => Int.MaxValue
     }
   }

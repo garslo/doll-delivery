@@ -21,6 +21,7 @@ object DijkstraAlgorithmSpec extends mutable.Specification {
   "DijkstraAlgorithm" should {
     val (start, end, edges) = loadFile(dataFiles(0), MapSyntax)
     val dijkstra = new DijkstraAlgorithm(edges)
+    dijkstra.initialize()
 
     "recognize unvisited neighbors" in {
       val result = dijkstra.unvisitedNeighbors("Brian's apartment")
@@ -38,10 +39,11 @@ object DijkstraAlgorithmSpec extends mutable.Specification {
       result must be equalTo(6)
     }
 
-    "give the proper path for test data" in {
-      val result = dijkstra.findShortestPath(start, end)
-      val desiredResult = "Kruthika's abode => Brian's apartment => Wesley's condo => Bryce's den => Craig's haunt"
-      result.mkString(" => ") must be equalTo(desiredResult)
+    "give the proper distance and path for test data 1" in {
+      val (distance, path) = dijkstra.findShortestPath(start, end)
+      val desiredPath = "Kruthika's abode => Brian's apartment => Wesley's condo => Bryce's den => Craig's haunt"
+      path.mkString(" => ") must be equalTo(desiredPath)
+      distance must be equalTo(31)
     }
   }
 }
