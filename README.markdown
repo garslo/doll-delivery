@@ -30,6 +30,12 @@ To run the tests, run `sbt test` in the project's root directory.
 Alternatively, start `sbt` in the project's root directory and type
 `test` in the prompt.
 
+To test `doll-delivery` programmatically, simply import the object
+`com.garslo.dolldelivery.DeliverySolver` and run
+`DeliverySolver.dijkstra(filename, syntaxType)`, where `filename` is
+the path to your test file, and `syntaxType` is either `MapSyntax` or
+`CsvSyntax`, dependent upon your input file's formatting.
+
 ### Input Format
 
 `doll-delivery` accepts two types of formatting: a csv-like format and
