@@ -2,7 +2,7 @@
 
 This program completes the
 [challenge](https://github.com/postnati/doll-delivery) set forth by
-Atomic Object.
+Blue Medora.
 
 I have used Dijkstra's algorithm for finding the "shortest path"
 between two vertices on a connected, undirected, weighted graph. The
