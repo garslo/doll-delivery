@@ -19,7 +19,7 @@ object DijkstraAlgorithmSpec extends mutable.Specification {
   )
 
   "DijkstraAlgorithm" should {
-    val (start, end, edges) = loadMapSyntaxFile(dataFiles(0))
+    val (start, end, edges) = loadFile(dataFiles(0), MapSyntax)
     val dijkstra = new DijkstraAlgorithm(edges)
 
     "recognize unvisited neighbors" in {
@@ -36,6 +36,12 @@ object DijkstraAlgorithmSpec extends mutable.Specification {
 
       val result2 = dijkstra.distanceBetween("Matt's pad", "Nathan's flat")
       result must be equalTo(6)
+    }
+
+    "give the proper path for test data" in {
+      val result = dijkstra.findShortestPath(start, end)
+      val desiredResult = "Kruthika's abode => Brian's apartment => Wesley's condo => Bryce's den => Craig's haunt"
+      result.mkString(" => ") must be equalTo(desiredResult)
     }
   }
 }

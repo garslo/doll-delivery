@@ -6,7 +6,6 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
   val neighbors = collection.mutable.Map.empty[String, MutableSet]
   val unvisitedVertices = collection.mutable.Set.empty[String]
   val visitedVertices = collection.mutable.Set.empty[String]
-  // TODO: Keeps track of the path stuff?? see "previous" on wikipedia
   val previous = collection.mutable.Map.empty[String, String]
 
   // Set up the distances and neighbors
@@ -37,9 +36,7 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
   }
 
   def setTentativeDistances(current: String) = {
-    println("Called setTentativeDistances with " + current.toString)
     unvisitedNeighbors(current) foreach { neighbor =>
-      println("  foreach, " + neighbor.toString)
       val tentativeDistance = distances(current) + distanceBetween(current, neighbor)
 
       if (tentativeDistance < distances(neighbor)) {
@@ -59,8 +56,6 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
     markAsVisited(start)
     var current = start
     do {
-      // REMOVEME
-      println("in do loop " + current.toString)
       setTentativeDistances(current)
       markAsVisited(current)
       // Find smallest tentative distance
@@ -74,7 +69,8 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
       current = previous(current)
     } while (previous(current) != "")
 
-    shortestPath
+    shortestPath += start
+    shortestPath.reverse
   }
 
   def closestVertex(vertex: String) = {
