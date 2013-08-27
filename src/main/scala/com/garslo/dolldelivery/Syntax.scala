@@ -12,8 +12,8 @@ object MapSyntax extends DataSyntax {
 object CsvSyntax extends DataSyntax {
   // We'll take csv in the form of v1, v2, distance
   val edgeRegex = """^s*(.*)\s*,\s*(.*)\s*,\s*(\d+)"""
-  val startVertexRegex = """startingLocation:\s*"(.+)""""
-  val endVertexRegex = """targetLocation:\s*"(.+)""""
+  val startVertexRegex = """startingLocation:\s*(.+)"""
+  val endVertexRegex = """targetLocation:\s*(.+)"""
 }
 
 // Convenience object for loading files
