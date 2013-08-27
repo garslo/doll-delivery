@@ -20,9 +20,15 @@ To determine the shortest path between two vertices, run `sbt "run
 path/to/data/file.txt"` in the project's root directory. Note the
 quotes; `sbt` chokes without them.
 
+Alternatively, start `sbt` in the project's root directory and type
+`run path/to/data/file.txt` in the prompt.
+
 ### Testing
 
 To run the tests, run `sbt test` in the project's root directory.
+
+Alternatively, start `sbt` in the project's root directory and type
+`test` in the prompt.
 
 ### Input Format
 
