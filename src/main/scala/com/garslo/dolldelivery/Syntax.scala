@@ -15,13 +15,3 @@ object CsvSyntax extends DataSyntax {
   val startVertexRegex = """startingLocation:\s*(.+)"""
   val endVertexRegex = """targetLocation:\s*(.+)"""
 }
-
-// Convenience object for loading files
-object loadFile {
-  def apply(filename: String, syntax: DataSyntax) = {
-    val validator = new Validator(syntax)
-    val extractor = new Extractor(validator)
-    val loader = new FileLoader(extractor)
-    loader.load(filename)
-  }
-}
