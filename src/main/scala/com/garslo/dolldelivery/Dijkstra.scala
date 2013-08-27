@@ -1,5 +1,5 @@
 package com.garslo.dolldelivery
-
+n
 class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorithm {
   type MutableSet = collection.mutable.Set[String]
   // For convenience; stores the neighbors for a given vertex
@@ -108,8 +108,8 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
   def distanceBetween(start: String, end: String) = {
     // This is ugly, but I can't find a better way.
     val edge = graph.find(m => {
-      // TODO: Ugly
-      (m("startLocation") == start && m("endLocation") == end) || (m("endLocation") == start && m("startLocation") == end)
+      (m("startLocation") == start && m("endLocation") == end) ||
+      (m("endLocation") == start && m("startLocation") == end)
     })
     edge match {
       // Not ideal: the map value is truly an integer, but typed as
