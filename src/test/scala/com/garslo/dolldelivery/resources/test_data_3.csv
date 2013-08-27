@@ -1,0 +1,17 @@
+startingLocation: E
+targetLocation: C
+
+The correct path is G -> D -> C (distance 2)
+
+A,B,4
+A,C,1
+A,G,3
+B,C,2
+B,F,1
+B,E,2
+C,D,1
+C,F,1
+D,F,1
+D,G,2
+E,F,1
+F,G,1
