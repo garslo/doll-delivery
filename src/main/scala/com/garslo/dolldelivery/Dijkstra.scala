@@ -1,24 +1,24 @@
 package com.garslo.dolldelivery
 
-class Edge {
-  var visited: Boolean
-  var distance: Int
-  val name: String
-}
-
-class DijkstraAlgorithm(graph: Seq[Map[String, Any]]) extends ShortestPathAlgorithm {
+class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorithm {
   val distances = collection.mutable.Map.empty[String, Int]
   type MutableSet = collection.mutable.Set[String]
   val neighbors = collection.mutable.Map.empty[String, MutableSet]
+  val unvisitedVertices = collection.mutable.Set.empty[String]
+  val visitedVertices = collection.mutable.Set.empty[String]
   // TODO: Keeps track of the path stuff?? see "previous" on wikipedia
   val previous = collection.mutable.Map.empty[String, String]
 
   // Set up the distances and neighbors
+  // TODO: Change to foreach
   for (edge <- graph) {
     val start = edge("startLocation").toString
     val end = edge("endLocation").toString
     distances(start) = Int.MaxValue
     distances(end) = Int.MaxValue
+    // Clean this up?
+    unvisitedVertices += start
+    unvisitedVertices += end
 
     previous(edge("startLocation").toString) = ""
 
@@ -43,19 +43,26 @@ class DijkstraAlgorithm(graph: Seq[Map[String, Any]]) extends ShortestPathAlgori
       val tentativeDistance = distances(current) + distanceBetween(current, neighbor)
 
       if (tentativeDistance < distances(neighbor)) {
-          distances(neighbor) = tentativeDistance
-          previous(neighbor) = current
+        distances(neighbor) = tentativeDistance
+        previous(neighbor) = current
       }
     }
   }
 
+  def markAsVisited(vertex: String) = {
+    unvisitedVertices -= vertex
+    visitedVertices += vertex
+  }
+
   def findShortestPath(start: String, end: String) = {
     distances(start) = 0
+    markAsVisited(start)
     var current = start
     do {
       // REMOVEME
       println("in do loop " + current.toString)
       setTentativeDistances(current)
+      markAsVisited(current)
       // Find smallest tentative distance
       current = closestVertex(current)
     } while (!visited(end))
@@ -74,7 +81,7 @@ class DijkstraAlgorithm(graph: Seq[Map[String, Any]]) extends ShortestPathAlgori
     var theClosestVertex = vertex
     var distance = Int.MaxValue
 
-    unvisitedNeighbors(vertex) foreach {n =>
+    unvisitedVertices foreach {n =>
       if (distances(n) < distance) {
         distance = distances(n)
         theClosestVertex = n
@@ -86,17 +93,19 @@ class DijkstraAlgorithm(graph: Seq[Map[String, Any]]) extends ShortestPathAlgori
   def distanceBetween(start: String, end: String) = {
     // This is ugly, but I can't find a better way.
     val edge = graph.find(m => {
-      m("startLocation") == start && m("endLocation") == end
+      // TODO: Ugly
+      (m("startLocation") == start && m("endLocation") == end) || (m("endLocation") == start && m("startLocation") == end)
     })
     edge match {
+      // TODO: change variable name
       case Some(thing) => thing("distance").toString().toInt
       case None => Int.MaxValue
     }
   }
 
   def unvisitedNeighbors(vertex: String) = {
-    neighbors(vertex) filter { distances(_) == Int.MaxValue }
+    neighbors(vertex) filter { !visited(_) }
   }
 
-  def visited(vertex: String) = distances(vertex) != Int.MaxValue
+  def visited(vertex: String) = visitedVertices contains vertex
 }
