@@ -1,6 +1,7 @@
 package com.garslo.dolldelivery
-n
+
 class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorithm {
+  // Some imperative code here...
   type MutableSet = collection.mutable.Set[String]
   // For convenience; stores the neighbors for a given vertex
   val neighbors = collection.mutable.Map.empty[String, MutableSet]
@@ -52,17 +53,20 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
   }
 
   def addAsNeighbors(start: String, end: String) = {
-      if (neighbors contains start) {
-        neighbors(start) += end
-      } else {
-        neighbors(start) = collection.mutable.Set(end)
-      }
+    // Double duty here: if the vertex isn't new, we tack onto the
+    // set, else we create a new set.
+    if (neighbors contains start) {
+      neighbors(start) += end
+    } else {
+      neighbors(start) = collection.mutable.Set(end)
+    }
 
-      if (neighbors contains end) {
-        neighbors(end) += start
-      } else {
-        neighbors(end) = collection.mutable.Set(start)
-      }
+    // Ditto
+    if (neighbors contains end) {
+      neighbors(end) += start
+    } else {
+      neighbors(end) = collection.mutable.Set(start)
+    }
   }
 
   def setTentativeDistances(current: String) = {
@@ -85,6 +89,8 @@ class DijkstraAlgorithm(graph: Seq[Map[String,Any]]) extends ShortestPathAlgorit
     val shortestPath = collection.mutable.MutableList.empty[String]
     var current = endVertex
 
+    // Traverses the "previous" map, starting at the endVertex and
+    // hopping to the start
     do {
       shortestPath += current
       current = previous(current)
