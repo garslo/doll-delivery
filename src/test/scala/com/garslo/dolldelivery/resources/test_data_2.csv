@@ -1,7 +1,7 @@
 startingLocation: A
 targetLocation: E
 
-The shortest path is A -> C -> F -> E (distance 3)
+The correct path is A => C => F => E
 
 A,B,4
 A,C,1
