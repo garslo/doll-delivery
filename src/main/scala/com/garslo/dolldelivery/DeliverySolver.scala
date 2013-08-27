@@ -6,8 +6,15 @@ object DeliverySolver {
       try {
         println(shortestPath(arg))
       } catch {
-        case badSyntax: BadSyntaxException => println("Could not parse one of your files")
-        case e: Exception => println("We had a problem.")
+        case badSyntax: BadSyntaxException => {
+          println("Could not parse file: " + arg)
+        }
+        case fileError: java.io.FileNotFoundException => {
+          println("Could not open file: " + arg)
+        }
+        case e: Exception => {
+          println("Caught an unanticipated exception, bailing out.")
+        }
       }
     }
   }
