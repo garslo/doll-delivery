@@ -40,24 +40,24 @@ object ValidatorSpec extends mutable.Specification {
 
     "recognize the initial vertex" in {
       val declaration = """startingLocation: "foo""""
-      val result = validator.isStartVertexDelcaration(declaration)
+      val result = validator.isSpecialDeclaration(declaration, "start")
 
       result must beTrue
 
       val badDeclaration = """notAStartingLocation: "nothing""""
-      val badResult = validator.isStartVertexDelcaration(badDeclaration)
+      val badResult = validator.isSpecialDeclaration(badDeclaration, "start")
 
       badResult must beFalse
     }
 
     "recognize the final vertex" in {
       val declaration = """targetLocation: "foo""""
-      val result = validator.isEndVertexDelcaration(declaration)
+      val result = validator.isSpecialDeclaration(declaration, "end")
 
       result must beTrue
 
       val badDeclaration = """notATargetLocation: "nothing""""
-      val badResult = validator.isEndVertexDelcaration(badDeclaration)
+      val badResult = validator.isSpecialDeclaration(badDeclaration, "end")
 
       badResult must beFalse
     }
@@ -92,24 +92,24 @@ object ValidatorSpec extends mutable.Specification {
 
     "recognize the initial vertex" in {
       val declaration = """startingLocation: "foo""""
-      val result = validator.isStartVertexDelcaration(declaration)
+      val result = validator.isSpecialDeclaration(declaration, "start")
 
       result must beTrue
 
       val badDeclaration = """notAStartingLocation: "nothing""""
-      val badResult = validator.isStartVertexDelcaration(badDeclaration)
+      val badResult = validator.isSpecialDeclaration(badDeclaration, "start")
 
       badResult must beFalse
     }
 
     "recognize the final vertex" in {
       val declaration = """targetLocation: "foo""""
-      val result = validator.isEndVertexDelcaration(declaration)
+      val result = validator.isSpecialDeclaration(declaration, "end")
 
       result must beTrue
 
       val badDeclaration = """notATargetLocation: "nothing""""
-      val badResult = validator.isEndVertexDelcaration(badDeclaration)
+      val badResult = validator.isSpecialDeclaration(badDeclaration, "end")
 
       badResult must beFalse
     }
@@ -162,7 +162,7 @@ object ExtractorSpec extends mutable.Specification {
         """startingLocation: "the start location"""",
         """targetLocation: "the target location""""
       )
-      val result = extractor.getStartVertex(lines)
+      val result = extractor.getVertex(lines, "start")
 
       result must be equalTo("the start location")
     }
@@ -172,7 +172,7 @@ object ExtractorSpec extends mutable.Specification {
         """startingLocation: "the start location"""",
         """targetLocation: "the target location""""
       )
-      val result = extractor.getEndVertex(lines)
+      val result = extractor.getVertex(lines, "end")
 
       result must be equalTo("the target location")
     }
