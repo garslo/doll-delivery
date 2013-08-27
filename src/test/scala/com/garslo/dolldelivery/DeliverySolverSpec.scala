@@ -21,11 +21,5 @@ object DeliverySolverSpec extends mutable.Specification {
       distance must be equalTo(3)
       path.mkString(" => ") must be equalTo("A => C => F => E")
     }
-
-    "solve test data 3" in {
-      val (distance, path) = DeliverySolver.dijkstra(dataFiles(2), MapSyntax)
-      distance must be equalTo(2)
-      path.mkString(" => ") must be equalTo("G => D => C")
-    }
   }
 }
