@@ -16,8 +16,9 @@ created and tested with sbt 2.1.1.
 
 ### Running
 
-To determine the shortest path between two vertices, run `sbt run
-path/to/data/file.txt` in the project's root directory.
+To determine the shortest path between two vertices, run `sbt "run
+path/to/data/file.txt"` in the project's root directory. Note the
+quotes; `sbt` chokes without them.
 
 ### Testing
 
@@ -66,9 +67,9 @@ No options, however a data file must be specified.
 ## Examples
 
 ```sh
-garslo> run src/test/scala/com/garslo/dolldelivery/resources/test_data_1.txt
-[info] Running com.garslo.dolldelivery.DeliverySolver src/test/scala/com/garslo/dolldelivery/resources/test_data_1.txt
+$ sbt "run src/test/scala/com/garslo/dolldelivery/resources/test_data_1.txt"
+...
 Map(distance -> 31, path -> Kruthika's abode => Brian's apartment => Wesley's condo => Bryce's den => Craig's haunt)
-[success] Total time: 2 s, completed Aug 27, 2013 4:55:46 PM
-garslo>
+..
+$
 ```
